@@ -24,7 +24,15 @@ class hangmanGame {
         // Load win and loss data from file
 
         try {
-            File file = new File("C:\\Users\\atcon\\Downloads\\stats.txt");
+            //get current directory
+           // String currentDir = System.getProperty("user.dir");
+            //create a new file object
+           // File file = new File(currentDir + "\\src\\main\\java\\com\\example\\hangman\\gameData.txt");
+
+            //get current directory
+            String currentDir = System.getProperty("user.dir");
+
+            File file = new File(currentDir + "\\stats.txt");
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
                 // First int is wins and second is losses
@@ -147,19 +155,6 @@ class hangmanGame {
     // getter for wrongLetters
     public String[] getWrongLetters() {
         return wrongLetters;
-    }
-
-    public void saveData(){
-        // Save wins and losses to file
-
-    }
-
-    public void endGame(){
-        // End game
-        // Display win or loss
-        // Ask if user wants to play again
-        // If yes, start new game
-        // If no, save data and exit
     }
 
 

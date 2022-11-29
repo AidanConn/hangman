@@ -2,15 +2,12 @@ package com.example.hangman;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -18,11 +15,8 @@ import javafx.stage.Stage;
 import  javafx.scene.control.Button;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.*;
 
-import static javafx.application.Application.launch;
 
 public class hangmanATC extends Application {
 
@@ -32,8 +26,13 @@ public class hangmanATC extends Application {
        // Hangman startup GUI
         // Needs to ask how many letters in the word
 
+
+        //get current directory
+        String currentDir = System.getProperty("user.dir");
+
         // Logo
-        Image image = new Image("Hangman.png");
+        Image image = new Image(currentDir + "\\Hangman.png");
+        System.out.println(currentDir + "\\Hangman.png");
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
@@ -119,22 +118,24 @@ public class hangmanATC extends Application {
         int guesses = game.getGuesses();
 
         String[] blankWordArray = new String[numLetters];
-        String blankWord = "";
+        StringBuilder blankWord = new StringBuilder();
         for (int i = 0; i < numLetters; i++) {
             blankWordArray[i] = "_";
-            blankWord += "_ ";
+            blankWord.append("_ ");
         }
 
         // Hangman startup GUI
         // Needs to ask how many letters in the word
 
+        String currentDir = System.getProperty("user.dir");
+
         // Logo
-        Image image = new Image("Hangman.png");
+        Image image = new Image(currentDir + "\\Hangman.png");
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
 
-        Text word = new Text(blankWord);
+        Text word = new Text(blankWord.toString());
         word.setFill(Color.BLACK);
         word.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -183,6 +184,9 @@ public class hangmanATC extends Application {
             String letter = textField.getText();
             letter = letter.toLowerCase();
 
+            //Set the text box to blank
+            textField.setText("");
+
             // check if the letter is in the word
             if (game.guessLetter(letter)) {
                 System.out.println("Correct");
@@ -192,7 +196,7 @@ public class hangmanATC extends Application {
 
 
 
-                String newWord = "";
+                StringBuilder newWord = new StringBuilder();
                 for (int i = 0; i < numLetters; i++) {
                     // for each letter in the word check if it is in the correct letters array. if show the letter, if not show a blank
                     char[] wordToGuess = game.getWord().toCharArray();
@@ -206,21 +210,22 @@ public class hangmanATC extends Application {
                 for (int i = 0; i < numLetters; i++) {
                     // if null show "_" else show the letter
                     if (blankWordArray[i] == null) {
-                        newWord += "_ ";
+                        newWord.append("_ ");
                     } else {
-                        newWord += blankWordArray[i] + " ";
+                        newWord.append(blankWordArray[i]).append(" ");
                     }
                 }
 
-                word.setText(newWord);
+                word.setText(newWord.toString());
 
                 // check if the game is over by checking if the word is complete with no blanks
-                if (!newWord.contains("_")) {
+                if (!newWord.toString().contains("_")) {
                     // game is over
                    gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), true);
 
                    //hide the game GUI
                      gameStage.hide();
+
                 }
 
 
@@ -235,7 +240,18 @@ public class hangmanATC extends Application {
 
                 // update the wrong letters guessed
                 t6.setText("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
+
+                // check if the game is over by the array having 6 letters
+                if (game.getWrongLetters()[5] != null) {
+                    // game is over
+                    gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), false);
+
+                    //hide the game GUI
+                    gameStage.hide();
+                }
+
             }
+
 
 
         });
@@ -244,8 +260,8 @@ public class hangmanATC extends Application {
 
         char[] wordToGuess = game.getWord().toCharArray();
         // print the array
-        for (int i = 0; i < wordToGuess.length; i++) {
-            System.out.println(wordToGuess[i]);
+        for (char toGuess : wordToGuess) {
+            System.out.println(toGuess);
         }
 
 
@@ -285,6 +301,8 @@ public class hangmanATC extends Application {
             losses++;
         }
 
+        // get current directory
+        String currentDir = System.getProperty("user.dir");
 
         // create a new stage
         Stage gameOverStage = new Stage();
@@ -296,7 +314,7 @@ public class hangmanATC extends Application {
         VBox vBox = new VBox(50);
 
         // logo
-        Image image = new Image("Hangman.png");
+        Image image = new Image(currentDir + "\\Hangman.png");
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
@@ -336,10 +354,33 @@ public class hangmanATC extends Application {
             // close the current stage
             gameOverStage.close();
 
-            // start a new game
-           // startGame();
-
+            // restart the game at the main menu
+            start(gameOverStage);
         });
+
+        // Save the wins and losses to a file
+        try {
+            // create a file
+            File file = new File(currentDir + "\\stats.txt");
+
+            // create a file writer
+            FileWriter fileWriter = new FileWriter(file);
+
+            // create a buffered writer
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            // write the wins and losses to the file
+            bufferedWriter.write(wins + " " + losses);
+
+            // close the buffered writer
+            bufferedWriter.close();
+
+            System.out.println(file.getAbsolutePath());
+            System.out.println("Saved");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // add the text to the vBox
         vBox.getChildren().add(logo);
