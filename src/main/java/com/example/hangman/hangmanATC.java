@@ -1,10 +1,14 @@
 package com.example.hangman;
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -16,6 +20,8 @@ import  javafx.scene.control.Button;
 
 
 import java.io.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class hangmanATC extends Application {
@@ -111,6 +117,7 @@ public class hangmanATC extends Application {
     public void gameGUI(int numLetters) {
         // Secondary stage
         Stage gameStage = new Stage();
+        AtomicInteger wrongGuesses = new AtomicInteger(); // number of wrong guesses
 
         // create a new game
         hangmanGame game = new hangmanGame(numLetters);
@@ -134,6 +141,15 @@ public class hangmanATC extends Application {
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
+
+        // hangman Stick figure image "hangmanStick.png"
+        AtomicReference<Image> image2 = new AtomicReference<>(new Image(currentDir + "\\hangmanStages\\hangmanStick-0.png"));
+        ImageView hangmanStick = new ImageView(image2.get());
+        hangmanStick.setFitHeight(200);
+        hangmanStick.setFitWidth(200);
+
+
+
 
         Text word = new Text(blankWord.toString());
         word.setFill(Color.BLACK);
@@ -159,20 +175,16 @@ public class hangmanATC extends Application {
         t4.setFill(Color.BLACK);
         t4.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        // Display the word for testing
-        Text t5 = new Text(game.getWord());
+        // Wong letters guessed
+        Text t5 = new Text("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
         t5.setFill(Color.BLACK);
         t5.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-
-        // Wong letters guessed
-        Text t6 = new Text("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
-        t6.setFill(Color.BLACK);
-        t6.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         // Text box for the user to enter a letter
         TextField textField = new TextField();
         textField.setPromptText("Enter a letter");
         textField.setPrefColumnCount(10);
+        textField.setMaxSize(100, 100);
 
         // button needs to be defined
         Button b1 = new Button("Guess");
@@ -232,6 +244,15 @@ public class hangmanATC extends Application {
 
 
             } else {
+
+                wrongGuesses.getAndIncrement();
+
+                System.out.println(wrongGuesses);
+
+                image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-"+wrongGuesses+".png"));
+
+                System.out.println(currentDir + "\\hangmanStages\\hangmanStick-"+wrongGuesses+".png");
+
                 System.out.println("Wrong");
 
                 // update the number of guesses
@@ -239,7 +260,7 @@ public class hangmanATC extends Application {
 
 
                 // update the wrong letters guessed
-                t6.setText("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
+                t5.setText("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
 
                 // check if the game is over by the array having 6 letters
                 if (game.getWrongLetters()[5] != null) {
@@ -250,6 +271,8 @@ public class hangmanATC extends Application {
                     gameStage.hide();
                 }
 
+                // Update the image
+                hangmanStick.setImage(image2.get());
             }
 
 
@@ -268,25 +291,35 @@ public class hangmanATC extends Application {
         // create a stack pane
         StackPane stackPane = new StackPane();
 
-        // vBox for the text
-        VBox vBox = new VBox(50);
-        vBox.getChildren().add(logo);
-        vBox.getChildren().add(word);
-        vBox.getChildren().add(t1);
-        vBox.getChildren().add(t2);
-        vBox.getChildren().add(t3);
-        vBox.getChildren().add(t4);
-        vBox.getChildren().add(t5);
-        vBox.getChildren().add(t6);
-        vBox.getChildren().add(textField);
-        vBox.getChildren().add(b1);
+        // Organize the GUI elements
+
+        VBox vBox = new VBox(10);
+        vBox.getChildren().addAll(hangmanStick, t1, word, t2, t3, t4, t5, textField, b1);
+        vBox.setAlignment(Pos.CENTER);
+
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(logo);
+        hBox.setAlignment(Pos.CENTER);
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(hBox);
+        borderPane.setCenter(vBox);
+        borderPane.setPadding(new Insets(10, 10, 10, 10));
+
+        // add the border pane to the stack pane
+        stackPane.getChildren().add(borderPane);
+
+
+
+
+
 
 
         // add the vBox to the stack pane
-        stackPane.getChildren().add(vBox);
+        stackPane.setStyle("-fx-background-color: #FFFFFF;");
 
         // create a scene
-        Scene scene = new Scene(stackPane, 500, 500);
+        Scene scene = new Scene(stackPane, 800, 600);
         gameStage.setTitle("Hangman Game");
         gameStage.setScene(scene);
         gameStage.show();
