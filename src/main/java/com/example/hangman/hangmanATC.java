@@ -185,6 +185,16 @@ public class hangmanATC extends Application {
         textField.setPromptText("Enter a letter");
         textField.setPrefColumnCount(10);
         textField.setMaxSize(100, 100);
+        //text field only accepts one letter and no numbers
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 1) {
+                textField.setText(newValue.substring(0, 1));
+            }
+            if (!newValue.matches("[a-zA-Z]*")) {
+                textField.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+        });
+
 
         // button needs to be defined
         Button b1 = new Button("Guess");
@@ -196,86 +206,87 @@ public class hangmanATC extends Application {
             String letter = textField.getText();
             letter = letter.toLowerCase();
 
-            //Set the text box to blank
-            textField.setText("");
+            if(letter.equals("")) {
+                // do nothing
+            }else {
 
-            // check if the letter is in the word
-            if (game.guessLetter(letter)) {
-                System.out.println("Correct");
+                //Set the text box to blank
+                textField.setText("");
 
-                // update the number of guesses
-                t2.setText("Total Guesses: " + game.getGuesses());
+                // check if the letter is in the word
+                if (game.guessLetter(letter)) {
+                    System.out.println("Correct");
+
+                    // update the number of guesses
+                    t2.setText("Total Guesses: " + game.getGuesses());
 
 
+                    StringBuilder newWord = new StringBuilder();
+                    for (int i = 0; i < numLetters; i++) {
+                        // for each letter in the word check if it is in the correct letters array. if show the letter, if not show a blank
+                        char[] wordToGuess = game.getWord().toCharArray();
 
-                StringBuilder newWord = new StringBuilder();
-                for (int i = 0; i < numLetters; i++) {
-                    // for each letter in the word check if it is in the correct letters array. if show the letter, if not show a blank
-                    char[] wordToGuess = game.getWord().toCharArray();
+                        if (wordToGuess[i] == letter.charAt(0)) {
+                            blankWordArray[i] = letter;
+                        }
 
-                    if (wordToGuess[i] == letter.charAt(0)) {
-                        blankWordArray[i] = letter;
                     }
 
-                }
-
-                for (int i = 0; i < numLetters; i++) {
-                    // if null show "_" else show the letter
-                    if (blankWordArray[i] == null) {
-                        newWord.append("_ ");
-                    } else {
-                        newWord.append(blankWordArray[i]).append(" ");
+                    for (int i = 0; i < numLetters; i++) {
+                        // if null show "_" else show the letter
+                        if (blankWordArray[i] == null) {
+                            newWord.append("_ ");
+                        } else {
+                            newWord.append(blankWordArray[i]).append(" ");
+                        }
                     }
+
+                    word.setText(newWord.toString());
+
+                    // check if the game is over by checking if the word is complete with no blanks
+                    if (!newWord.toString().contains("_")) {
+                        // game is over
+                        gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), true);
+
+                        //hide the game GUI
+                        gameStage.hide();
+
+                    }
+
+
+                } else {
+
+                    wrongGuesses.getAndIncrement();
+
+                    System.out.println(wrongGuesses);
+
+                    image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-" + wrongGuesses + ".png"));
+
+                    System.out.println(currentDir + "\\hangmanStages\\hangmanStick-" + wrongGuesses + ".png");
+
+                    System.out.println("Wrong");
+
+                    // update the number of guesses
+                    t2.setText("Total Guesses: " + game.getGuesses());
+
+
+                    // update the wrong letters guessed
+                    t5.setText("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
+
+                    // check if the game is over by the array having 6 letters
+                    if (game.getWrongLetters()[5] != null) {
+                        // game is over
+                        gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), false);
+
+                        //hide the game GUI
+                        gameStage.hide();
+                    }
+
+                    // Update the image
+                    hangmanStick.setImage(image2.get());
                 }
 
-                word.setText(newWord.toString());
-
-                // check if the game is over by checking if the word is complete with no blanks
-                if (!newWord.toString().contains("_")) {
-                    // game is over
-                   gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), true);
-
-                   //hide the game GUI
-                     gameStage.hide();
-
-                }
-
-
-
-
-            } else {
-
-                wrongGuesses.getAndIncrement();
-
-                System.out.println(wrongGuesses);
-
-                image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-"+wrongGuesses+".png"));
-
-                System.out.println(currentDir + "\\hangmanStages\\hangmanStick-"+wrongGuesses+".png");
-
-                System.out.println("Wrong");
-
-                // update the number of guesses
-                t2.setText("Total Guesses: " + game.getGuesses());
-
-
-                // update the wrong letters guessed
-                t5.setText("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
-
-                // check if the game is over by the array having 6 letters
-                if (game.getWrongLetters()[5] != null) {
-                    // game is over
-                    gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), false);
-
-                    //hide the game GUI
-                    gameStage.hide();
-                }
-
-                // Update the image
-                hangmanStick.setImage(image2.get());
             }
-
-
 
         });
 
