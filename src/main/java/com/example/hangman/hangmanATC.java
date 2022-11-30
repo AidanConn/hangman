@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -108,6 +109,8 @@ public class hangmanATC extends Application {
         primaryStage.setTitle("Hangman Game");
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
 
 
     }
@@ -288,9 +291,17 @@ public class hangmanATC extends Application {
 
             }
 
+            // set the focus back to the text box
+            textField.requestFocus();
+
         });
 
-
+        // Listen for Enter key
+        textField.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                b1.fire();
+            }
+        });
 
         char[] wordToGuess = game.getWord().toCharArray();
         // print the array
@@ -330,10 +341,12 @@ public class hangmanATC extends Application {
         stackPane.setStyle("-fx-background-color: #FFFFFF;");
 
         // create a scene
-        Scene scene = new Scene(stackPane, 800, 600);
+        Scene scene = new Scene(stackPane, 650, 700);
         gameStage.setTitle("Hangman Game");
         gameStage.setScene(scene);
         gameStage.show();
+        gameStage.setResizable(false);
+        gameStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
 
 
     }
@@ -369,6 +382,18 @@ public class hangmanATC extends Application {
         t1.setFill(Color.BLACK);
         t1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
+
+        Image image2 = new Image(currentDir + "\\gameIcon.png");
+        ImageView overIcon = new ImageView(image2);
+        overIcon.setFitHeight(100);
+        overIcon.setFitWidth(100);
+
+        if(b){
+            overIcon.setImage(new Image(currentDir + "\\hangmanElements\\win.png"));
+        }else{
+            overIcon.setImage(new Image(currentDir + "\\hangmanElements\\lose.png"));
+        }
+
         // create a text
         Text t2 = new Text("Total Guesses: " + guesses);
         t2.setFill(Color.BLACK);
@@ -385,7 +410,7 @@ public class hangmanATC extends Application {
         t4.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         // create a text
-        Text t5 = new Text("You " + (b ? "Won" : "Lost"));
+        Text t5 = new Text("You " + (b ? "Won" : "Lose"));
         t5.setFill(Color.BLACK);
         t5.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -426,23 +451,21 @@ public class hangmanATC extends Application {
             e.printStackTrace();
         }
 
-        // add the text to the vBox
-        vBox.getChildren().add(logo);
-        vBox.getChildren().add(t1);
-        vBox.getChildren().add(t2);
-        vBox.getChildren().add(t3);
-        vBox.getChildren().add(t4);
-        vBox.getChildren().add(t5);
-        vBox.getChildren().add(b1);
+        // Organize the GUI elements
+        vBox.getChildren().addAll(logo, t1, overIcon, t5, t2, t3, t4, b1);
+        vBox.setAlignment(Pos.CENTER);
+
 
         // add the vBox to the stack pane
         stackPane.getChildren().add(vBox);
 
         // create a scene
-        Scene scene = new Scene(stackPane, 500, 500);
+        Scene scene = new Scene(stackPane, 500, 750);
         gameOverStage.setTitle("Game Over");
         gameOverStage.setScene(scene);
         gameOverStage.show();
+        gameOverStage.setResizable(false);
+        gameOverStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
     }
 
 
