@@ -58,12 +58,12 @@ public class hangmanATC extends Application {
 
         ComboBox comboBox = new ComboBox();
         comboBox.getItems().addAll(
-                "Easy (4 letters)",
+                "Hard (4 letters)",
                 "Medium (6 letters)",
-                "Hard (8 letters)"
+                "Easy (8 letters)"
         );
 
-        comboBox.setValue("Easy (4 letters)");
+        comboBox.setValue("Hard (4 letters)");
 
         // button needs to be defined
         Button b1 = new Button("Start Game");
@@ -75,7 +75,7 @@ public class hangmanATC extends Application {
         b1.setOnAction(e -> {
             // switch statement for the number of letters and pass it to the hangman game
             switch (comboBox.getValue().toString()) {
-                case "Easy (4 letters)":
+                case "Hard (4 letters)":
                     // start the game with 4 letters
                     gameGUI(4);
                     break;
@@ -83,7 +83,7 @@ public class hangmanATC extends Application {
                     // start the game with 6 letters
                     gameGUI(6);
                     break;
-                case "Hard (8 letters)":
+                case "Easy (8 letters)":
                     // start the game with 8 letters
                     gameGUI(8);
                     break;
@@ -296,7 +296,7 @@ public class hangmanATC extends Application {
 
         });
 
-        // Listen for Enter key
+        // Listener for the Enter key
         textField.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 b1.fire();
