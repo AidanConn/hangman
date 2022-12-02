@@ -1,4 +1,5 @@
 package com.example.hangman;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import  javafx.scene.control.Button;
+import javafx.scene.control.Button;
 
 
 import java.io.*;
@@ -27,11 +28,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class hangmanATC extends Application {
 
-    // My version of the game of hangman with javaFX
     @Override
     public void start(Stage primaryStage) {
-       // Hangman startup GUI
-        // Needs to ask how many letters in the word
+        // This is the main window of the game
 
 
         //get current directory
@@ -118,6 +117,8 @@ public class hangmanATC extends Application {
 
     // Game GUI (Pass in the number of letters)
     public void gameGUI(int numLetters) {
+        // This is the game GUI
+
         // Secondary stage
         Stage gameStage = new Stage();
         AtomicInteger wrongGuesses = new AtomicInteger(); // number of wrong guesses
@@ -152,8 +153,6 @@ public class hangmanATC extends Application {
         hangmanStick.setFitWidth(200);
 
 
-
-
         Text word = new Text(blankWord.toString());
         word.setFill(Color.BLACK);
         word.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -179,9 +178,10 @@ public class hangmanATC extends Application {
         t4.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         // Wong letters guessed
-        Text t5 = new Text("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
+        Text t5 = new Text("Wrong Letters Guessed: ");
         t5.setFill(Color.BLACK);
         t5.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+
 
         // Text box for the user to enter a letter
         TextField textField = new TextField();
@@ -209,9 +209,9 @@ public class hangmanATC extends Application {
             String letter = textField.getText();
             letter = letter.toUpperCase();
 
-            if(letter.equals("")) {
+            if (letter.equals("")) {
                 // do nothing
-            }else {
+            } else {
 
                 //Set the text box to blank
                 textField.setText("");
@@ -249,7 +249,7 @@ public class hangmanATC extends Application {
                     // check if the game is over by checking if the word is complete with no blanks
                     if (!newWord.toString().contains("_")) {
                         // game is over
-                        gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), true);
+                        gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), true, game.getWord());
 
                         //hide the game GUI
                         gameStage.hide();
@@ -272,14 +272,21 @@ public class hangmanATC extends Application {
                     // update the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
 
+                    String wrongLetters = "";
+
+                    // update the wrong letters guessed using for loop
+                    for (int i = 0; i < wrongGuesses.get(); i++) {
+                        wrongLetters += game.getWrongLetters()[i] + " ";
+                    }
 
                     // update the wrong letters guessed
-                    t5.setText("Wrong Letters Guessed: " + game.getWrongLetters()[0] + ", " + game.getWrongLetters()[1] + ", " + game.getWrongLetters()[2] + ", " + game.getWrongLetters()[3] + ", " + game.getWrongLetters()[4] + ", " + game.getWrongLetters()[5]);
+                    t5.setText("Wrong Letters Guessed: " + wrongLetters);
+
 
                     // check if the game is over by the array having 6 letters
                     if (game.getWrongLetters()[5] != null) {
                         // game is over
-                        gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), false);
+                        gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), false, game.getWord());
 
                         //hide the game GUI
                         gameStage.hide();
@@ -332,11 +339,6 @@ public class hangmanATC extends Application {
         stackPane.getChildren().add(borderPane);
 
 
-
-
-
-
-
         // add the vBox to the stack pane
         stackPane.setStyle("-fx-background-color: #FFFFFF;");
 
@@ -351,10 +353,12 @@ public class hangmanATC extends Application {
 
     }
 
-    private void gameOverGUI(int guesses, int wins, int losses, boolean b) {
-        if(b){
+    private void gameOverGUI(int guesses, int wins, int losses, boolean b, String word) {
+        // This method creates the game over GUI
+
+        if (b) {
             wins++;
-        }else{
+        } else {
             losses++;
         }
 
@@ -378,7 +382,7 @@ public class hangmanATC extends Application {
 
 
         // create a text
-        Text t1 = new Text("Game Over");
+        Text t1 = new Text("Word: " + word);
         t1.setFill(Color.BLACK);
         t1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -388,9 +392,9 @@ public class hangmanATC extends Application {
         overIcon.setFitHeight(100);
         overIcon.setFitWidth(100);
 
-        if(b){
+        if (b) {
             overIcon.setImage(new Image(currentDir + "\\hangmanElements\\win.png"));
-        }else{
+        } else {
             overIcon.setImage(new Image(currentDir + "\\hangmanElements\\lose.png"));
         }
 
@@ -470,6 +474,7 @@ public class hangmanATC extends Application {
 
 
     public static void main(String[] args) {
+        // launch the application
         launch(args);
     }
 }

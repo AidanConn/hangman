@@ -20,14 +20,14 @@ class hangmanGame {
     private String[] wrongLetters = new String[6]; // Array to hold the wrong letters
 
 
-    public void gameData(){
+    public void gameData() {
         // Load win and loss data from file
 
         try {
             //get current directory
-           // String currentDir = System.getProperty("user.dir");
+            // String currentDir = System.getProperty("user.dir");
             //create a new file object
-           // File file = new File(currentDir + "\\src\\main\\java\\com\\example\\hangman\\gameData.txt");
+            // File file = new File(currentDir + "\\src\\main\\java\\com\\example\\hangman\\gameData.txt");
 
             //get current directory
             String currentDir = System.getProperty("user.dir");
@@ -41,7 +41,6 @@ class hangmanGame {
                 losses = Integer.parseInt(data[1]);
 
 
-
             }
             sc.close();
         } catch (FileNotFoundException e) {
@@ -52,7 +51,7 @@ class hangmanGame {
     }
 
     // get the word from a list of words
-    public hangmanGame(int wordLength){
+    public hangmanGame(int wordLength) {
         gameData();
         newGame(wordLength);
     }
@@ -88,7 +87,7 @@ class hangmanGame {
 
     // Methods
 
-    public void newGame(int wordLength){
+    public void newGame(int wordLength) {
         // Start a new game
         // Reset guesses
         guesses = 0;
@@ -104,7 +103,7 @@ class hangmanGame {
         // 4 letter words array
         String[] wordList4 = {"JAVA", "BYTE", "CODE", "DATA", "FILE", "LINK", "LIST", "LOOP", "MAIN", "NULL", "PAGE", "PATH", "PORT", "READ", "ROOT", "SIZE", "TEXT", "TRUE", "TYPE", "VOID", "WORD", "ZERO"};
         // 6 letter words
-        String[] wordList6 = { "COOKIE", "MEMORY", "NUMBER", "OBJECT", "OUTPUT", "STRING", "SYSTEM", "SERVER"};
+        String[] wordList6 = {"COOKIE", "MEMORY", "NUMBER", "OBJECT", "OUTPUT", "STRING", "SYSTEM", "SERVER"};
         // 8 letter words
         String[] wordList8 = {"VARIABLE", "FUNCTION", "DATABASE", "SOFTWARE", "HARDWARE", "OPERATOR", "COMPUTER", "LANGUAGE", "COMPILER", "DEBUGGER", "KEYBOARD", "INTERNET", "SOFTWARE", "HARDWARE", "OPERATOR", "COMPUTER", "LANGUAGE", "COMPILER", "DEBUGGER", "INTERNET"};
 
@@ -140,12 +139,12 @@ class hangmanGame {
 
     }
 
-    public boolean guessLetter(String letterGuess){
+    public boolean guessLetter(String letterGuess) {
         // Get letter from user
         guesses++;
         String letter = letterGuess;
         // Check if letter is in word
-        if (word.contains(String.valueOf(letter))){
+        if (word.contains(String.valueOf(letter))) {
             return true;
         } else {
             // Add letter to wrongLetters array
@@ -161,5 +160,10 @@ class hangmanGame {
         return wrongLetters;
     }
 
+
+    // Return wrong guesses count
+    public int getWrongGuesses() {
+        return wrongGuesses;
+    }
 
 }
