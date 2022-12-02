@@ -207,7 +207,7 @@ public class hangmanATC extends Application {
         b1.setOnAction(e -> {
             // get the letter from the text box
             String letter = textField.getText();
-            letter = letter.toLowerCase();
+            letter = letter.toUpperCase();
 
             if(letter.equals("")) {
                 // do nothing

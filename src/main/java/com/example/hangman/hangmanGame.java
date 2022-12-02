@@ -99,10 +99,14 @@ class hangmanGame {
     }
 
     public String getWord(int wordLength) {
-        // 3 different word lists {4, 6, 8} letters long | computer terms
-        String[] wordList4 = { "java"};
-        String[] wordList6 = { "python"};
-        String[] wordList8 = {"computer"};
+        // 3 different word lists {4, 6, 8} letters long to choose from
+        // make the words technology related (computer terms) 4 letters, 6 letters, 8 letters
+        // 4 letter words array
+        String[] wordList4 = {"JAVA", "BYTE", "CODE", "DATA", "FILE", "LINK", "LIST", "LOOP", "MAIN", "NULL", "PAGE", "PATH", "PORT", "READ", "ROOT", "SIZE", "TEXT", "TRUE", "TYPE", "VOID", "WORD", "ZERO"};
+        // 6 letter words
+        String[] wordList6 = { "COOKIE", "MEMORY", "NUMBER", "OBJECT", "OUTPUT", "STRING", "SYSTEM", "SERVER"};
+        // 8 letter words
+        String[] wordList8 = {"VARIABLE", "FUNCTION", "DATABASE", "SOFTWARE", "HARDWARE", "OPERATOR", "COMPUTER", "LANGUAGE", "COMPILER", "DEBUGGER", "KEYBOARD", "INTERNET", "SOFTWARE", "HARDWARE", "OPERATOR", "COMPUTER", "LANGUAGE", "COMPILER", "DEBUGGER", "INTERNET"};
 
         switch (wordLength) {
             case 4 -> {
