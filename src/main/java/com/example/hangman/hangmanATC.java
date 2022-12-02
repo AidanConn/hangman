@@ -346,8 +346,6 @@ public class hangmanATC extends Application {
         gameStage.show();
         gameStage.setResizable(false);
         gameStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
-
-
     }
 
     private void gameOverGUI(int guesses, int wins, int losses, boolean b, String word) {
