@@ -74,18 +74,15 @@ public class hangmanATC extends Application {
         b1.setOnAction(e -> {
             // switch statement for the number of letters and pass it to the hangman game
             switch (comboBox.getValue().toString()) {
-                case "Hard (4 letters)":
+                case "Hard (4 letters)" ->
                     // start the game with 4 letters
-                    gameGUI(4);
-                    break;
-                case "Medium (6 letters)":
+                        gameGUI(4);
+                case "Medium (6 letters)" ->
                     // start the game with 6 letters
-                    gameGUI(6);
-                    break;
-                case "Easy (8 letters)":
+                        gameGUI(6);
+                case "Easy (8 letters)" ->
                     // start the game with 8 letters
-                    gameGUI(8);
-                    break;
+                        gameGUI(8);
             }
 
             // hide the startup GUI
@@ -105,7 +102,7 @@ public class hangmanATC extends Application {
 
 
         Scene scene = new Scene(vBox, 500, 500);
-        primaryStage.setTitle("Hangman Game");
+        primaryStage.setTitle("Hangman | Start");
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setResizable(false);
@@ -209,7 +206,7 @@ public class hangmanATC extends Application {
             String letter = textField.getText();
             letter = letter.toUpperCase();
 
-            if (letter.equals("")) {
+            if (letter.length() != 1 || letter.equals(" ")) {
                 // do nothing
             } else {
 
@@ -272,11 +269,11 @@ public class hangmanATC extends Application {
                     // update the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
 
-                    String wrongLetters = "";
+                    StringBuilder wrongLetters = new StringBuilder();
 
                     // update the wrong letters guessed using for loop
                     for (int i = 0; i < wrongGuesses.get(); i++) {
-                        wrongLetters += game.getWrongLetters()[i] + " ";
+                        wrongLetters.append(game.getWrongLetters()[i]).append(" ");
                     }
 
                     // update the wrong letters guessed
@@ -344,7 +341,7 @@ public class hangmanATC extends Application {
 
         // create a scene
         Scene scene = new Scene(stackPane, 650, 700);
-        gameStage.setTitle("Hangman Game");
+        gameStage.setTitle("Hangman | Game");
         gameStage.setScene(scene);
         gameStage.show();
         gameStage.setResizable(false);
@@ -414,7 +411,7 @@ public class hangmanATC extends Application {
         t4.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         // create a text
-        Text t5 = new Text("You " + (b ? "Won" : "Lose"));
+        Text t5 = new Text("You " + (b ? "Won!" : "Lose!"));
         t5.setFill(Color.BLACK);
         t5.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
@@ -465,7 +462,7 @@ public class hangmanATC extends Application {
 
         // create a scene
         Scene scene = new Scene(stackPane, 500, 750);
-        gameOverStage.setTitle("Game Over");
+        gameOverStage.setTitle("Hangman | Game Over");
         gameOverStage.setScene(scene);
         gameOverStage.show();
         gameOverStage.setResizable(false);
