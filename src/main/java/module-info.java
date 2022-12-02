@@ -3,6 +3,6 @@ module com.example.hangman {
     requires javafx.fxml;
 
 
-    opens com.example.hangman to javafx.fxml;
-    exports com.example.hangman;
+    opens edu.aidan.hangman to javafx.fxml;
+    exports edu.aidan.hangman;
 }

@@ -1,4 +1,4 @@
-package com.example.hangman;
+package edu.aidan.hangman;
 
 import java.io.File;
 import java.io.FileNotFoundException;
