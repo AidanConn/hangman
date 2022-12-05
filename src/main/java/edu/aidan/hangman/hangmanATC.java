@@ -53,8 +53,7 @@ public class hangmanATC extends Application {
         // center the text
         t1.setStyle("-fx-alignment: center;");
 
-        // combo box for the number of letters
-
+        // Selection box for the number of letters
         ComboBox comboBox = new ComboBox();
         comboBox.getItems().addAll(
                 "Hard (4 letters)",
@@ -62,15 +61,15 @@ public class hangmanATC extends Application {
                 "Easy (8 letters)"
         );
 
+        // Default selection
         comboBox.setValue("Hard (4 letters)");
 
-        // button needs to be defined
+        // Start button
         Button b1 = new Button("Start Game");
         b1.setStyle("-fx-font: 22 arial;");
         // center the button below the text
 
-        //b1.setStyle("-fx-alignment: center;");
-        // button action
+        // Start button action
         b1.setOnAction(e -> {
             // switch statement for the number of letters and pass it to the hangman game
             switch (comboBox.getValue().toString()) {
@@ -116,11 +115,11 @@ public class hangmanATC extends Application {
     public void gameGUI(int numLetters) {
         // This is the game GUI
 
-        // Secondary stage
+        // New stage
         Stage gameStage = new Stage();
         AtomicInteger wrongGuesses = new AtomicInteger(); // number of wrong guesses
 
-        // create a new game
+        // Creates a new game
         hangmanGame game = new hangmanGame(numLetters);
 
         int guesses = game.getGuesses();
@@ -143,7 +142,7 @@ public class hangmanATC extends Application {
         logo.setFitHeight(100);
         logo.setFitWidth(359);
 
-        // hangman Stick figure image "hangmanStick.png"
+        // Create a new image view | Atomic reference is used to change the image later
         AtomicReference<Image> image2 = new AtomicReference<>(new Image(currentDir + "\\hangmanStages\\hangmanStick-0.png"));
         ImageView hangmanStick = new ImageView(image2.get());
         hangmanStick.setFitHeight(200);
@@ -206,21 +205,21 @@ public class hangmanATC extends Application {
             String letter = textField.getText();
             letter = letter.toUpperCase();
 
-            if (letter.length() != 1 || letter.equals(" ")) {
-                // do nothing
-            } else {
 
+            if (letter.length() != 1 || letter.equals(" ")) {
+                // This makes sure a space or more than one letter is not entered or no letter is entered
+            } else {
                 //Set the text box to blank
                 textField.setText("");
 
-                // check if the letter is in the word
+                // This checks if the letter is in the word by passing the letter to the game class
                 if (game.guessLetter(letter)) {
                     System.out.println("Correct");
 
-                    // update the number of guesses
+                    // This updates the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
 
-
+                    // This updates the word and displays the correct letters
                     StringBuilder newWord = new StringBuilder();
                     for (int i = 0; i < numLetters; i++) {
                         // for each letter in the word check if it is in the correct letters array. if show the letter, if not show a blank
@@ -232,6 +231,7 @@ public class hangmanATC extends Application {
 
                     }
 
+                    // This takes the array and turns it into a string
                     for (int i = 0; i < numLetters; i++) {
                         // if null show "_" else show the letter
                         if (blankWordArray[i] == null) {
@@ -240,10 +240,10 @@ public class hangmanATC extends Application {
                             newWord.append(blankWordArray[i]).append(" ");
                         }
                     }
-
+                    // Updates the blank word on the screen
                     word.setText(newWord.toString());
 
-                    // check if the game is over by checking if the word is complete with no blanks
+                    // This checks if the word has been guessed by if there is any "_" left
                     if (!newWord.toString().contains("_")) {
                         // game is over
                         gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), true, game.getWord());
@@ -255,11 +255,14 @@ public class hangmanATC extends Application {
 
 
                 } else {
+                    // Wrong letter
+
 
                     wrongGuesses.getAndIncrement();
 
                     System.out.println(wrongGuesses);
 
+                    // Updates the hangman image
                     image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-" + wrongGuesses + ".png"));
 
                     System.out.println(currentDir + "\\hangmanStages\\hangmanStick-" + wrongGuesses + ".png");
@@ -351,6 +354,7 @@ public class hangmanATC extends Application {
     private void gameOverGUI(int guesses, int wins, int losses, boolean b, String word) {
         // This method creates the game over GUI
 
+        //Update the wins and losses
         if (b) {
             wins++;
         } else {
@@ -387,6 +391,7 @@ public class hangmanATC extends Application {
         overIcon.setFitHeight(100);
         overIcon.setFitWidth(100);
 
+        // Sets image based on if the game was won or lost
         if (b) {
             overIcon.setImage(new Image(currentDir + "\\hangmanElements\\win.png"));
         } else {
