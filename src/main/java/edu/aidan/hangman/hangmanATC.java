@@ -220,10 +220,10 @@ public class hangmanATC extends Application {
                     // This updates the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
 
-                    // This updates the word and displays the correct letters
+                    // This updates the blank word array
                     StringBuilder newWord = new StringBuilder();
                     for (int i = 0; i < numLetters; i++) {
-                        // for each letter in the word check if it is in the correct letters array. if show the letter, if not show a blank
+                        // for each letter in the word check if it is in the correct letters array. If show the letter, if not show a blank
                         char[] wordToGuess = game.getWord().toCharArray();
 
                         if (wordToGuess[i] == letter.charAt(0)) {
