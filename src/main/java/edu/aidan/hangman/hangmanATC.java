@@ -38,7 +38,6 @@ public class hangmanATC extends Application {
 
         // Logo
         Image image = new Image(currentDir + "\\Hangman.png");
-        System.out.println(currentDir + "\\Hangman.png");
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
@@ -89,17 +88,17 @@ public class hangmanATC extends Application {
 
         });
 
-        // button needs to go below the text
+        // VBox to hold the logo, text and selection box
         VBox vBox = new VBox(50);
         vBox.getChildren().add(logo);
         vBox.getChildren().add(t1);
         vBox.getChildren().add(comboBox);
         vBox.getChildren().add(b1);
 
-
+        // center the VBox
         vBox.setStyle("-fx-alignment: center;");
 
-
+        // Scene for the startup GUI
         Scene scene = new Scene(vBox, 500, 500);
         primaryStage.setTitle("Hangman | Start");
         primaryStage.setScene(scene);
@@ -117,13 +116,14 @@ public class hangmanATC extends Application {
 
         // New stage
         Stage gameStage = new Stage();
-        AtomicInteger wrongGuesses = new AtomicInteger(); // number of wrong guesses
 
         // Creates a new game
         hangmanGame game = new hangmanGame(numLetters);
 
+        // guesses used
         int guesses = game.getGuesses();
 
+        // String to hold the word to guess (with underscores)
         String[] blankWordArray = new String[numLetters];
         StringBuilder blankWord = new StringBuilder();
         for (int i = 0; i < numLetters; i++) {
@@ -131,9 +131,8 @@ public class hangmanATC extends Application {
             blankWord.append("_ ");
         }
 
-        // Hangman startup GUI
-        // Needs to ask how many letters in the word
 
+        // get current directory
         String currentDir = System.getProperty("user.dir");
 
         // Logo
@@ -148,7 +147,7 @@ public class hangmanATC extends Application {
         hangmanStick.setFitHeight(200);
         hangmanStick.setFitWidth(200);
 
-
+        // Text to display the word to guess
         Text word = new Text(blankWord.toString());
         word.setFill(Color.BLACK);
         word.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -186,9 +185,12 @@ public class hangmanATC extends Application {
         textField.setMaxSize(100, 100);
         //text field only accepts one letter and no numbers
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // This check if the length of the text is greater than 1
             if (newValue.length() > 1) {
+                // This will only allow one character to be entered by changing the text to the first character
                 textField.setText(newValue.substring(0, 1));
             }
+            // This checks if the text is a number, special character
             if (!newValue.matches("[a-zA-Z]*")) {
                 textField.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
             }
@@ -214,7 +216,6 @@ public class hangmanATC extends Application {
 
                 // This checks if the letter is in the word by passing the letter to the game class
                 if (game.guessLetter(letter)) {
-                    System.out.println("Correct");
 
                     // This updates the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
@@ -226,6 +227,7 @@ public class hangmanATC extends Application {
                         char[] wordToGuess = game.getWord().toCharArray();
 
                         if (wordToGuess[i] == letter.charAt(0)) {
+                            // This sets the letter in the blank word array to the correct letter
                             blankWordArray[i] = letter;
                         }
 
@@ -235,8 +237,10 @@ public class hangmanATC extends Application {
                     for (int i = 0; i < numLetters; i++) {
                         // if null show "_" else show the letter
                         if (blankWordArray[i] == null) {
+                            // This adds "_" to the string
                             newWord.append("_ ");
                         } else {
+                            // This adds the letter to the string
                             newWord.append(blankWordArray[i]).append(" ");
                         }
                     }
@@ -257,17 +261,8 @@ public class hangmanATC extends Application {
                 } else {
                     // Wrong letter
 
-
-                    wrongGuesses.getAndIncrement();
-
-                    System.out.println(wrongGuesses);
-
                     // Updates the hangman image
-                    image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-" + wrongGuesses + ".png"));
-
-                    System.out.println(currentDir + "\\hangmanStages\\hangmanStick-" + wrongGuesses + ".png");
-
-                    System.out.println("Wrong");
+                    image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-" + game.getWrongGuesses() + ".png"));
 
                     // update the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
@@ -275,7 +270,7 @@ public class hangmanATC extends Application {
                     StringBuilder wrongLetters = new StringBuilder();
 
                     // update the wrong letters guessed using for loop
-                    for (int i = 0; i < wrongGuesses.get(); i++) {
+                    for (int i = 0; i < game.getWrongGuesses(); i++) {
                         wrongLetters.append(game.getWrongLetters()[i]).append(" ");
                     }
 
@@ -309,12 +304,6 @@ public class hangmanATC extends Application {
                 b1.fire();
             }
         });
-
-        char[] wordToGuess = game.getWord().toCharArray();
-        // print the array
-        for (char toGuess : wordToGuess) {
-            System.out.println(toGuess);
-        }
 
 
         // create a stack pane
@@ -448,10 +437,9 @@ public class hangmanATC extends Application {
             // close the buffered writer
             bufferedWriter.close();
 
-            System.out.println(file.getAbsolutePath());
-            System.out.println("Saved");
 
         } catch (IOException e) {
+            // Error message
             e.printStackTrace();
         }
 

@@ -5,17 +5,19 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 class hangmanGame {
-    // Oject oriented version of the game of hangman
-    // Global variables
-    // Number of guesses
+    // This is the main class for the hangman game.
+
+    // This keeps track of the number of guesses the user used.
     private int guesses = 0;
 
+    // Wins and losses are tracked here.
     private int wins = 0;
     private int losses = 0;
 
+    // This is the word that the user is trying to guess.
     private String word = "";
-    private String wordDisplay = "";
 
+    // This keeps the number of wrong guesses the user has made.
     private int wrongGuesses = 0;
     private String[] wrongLetters = new String[6]; // Array to hold the wrong letters
 
@@ -61,24 +63,12 @@ class hangmanGame {
         return guesses;
     }
 
-    public void setGuesses(int guesses) {
-        this.guesses = guesses;
-    }
-
     public int getWins() {
         return wins;
     }
 
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
-
     public int getLosses() {
         return losses;
-    }
-
-    public void setLosses(int losses) {
-        this.losses = losses;
     }
 
     public String getWord() {
@@ -160,10 +150,10 @@ class hangmanGame {
         return wrongLetters;
     }
 
-
-    // Return wrong guesses count
+    // getter for wrongGuesses
     public int getWrongGuesses() {
         return wrongGuesses;
     }
+
 
 }
