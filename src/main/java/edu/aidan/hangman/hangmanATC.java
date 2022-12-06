@@ -301,6 +301,7 @@ public class hangmanATC extends Application {
         // Listener for the Enter key
         textField.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
+                // This calls the button action
                 b1.fire();
             }
         });
