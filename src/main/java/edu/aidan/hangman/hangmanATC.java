@@ -1,5 +1,16 @@
 package edu.aidan.hangman;
 
+//**************************
+//hangmanATC.java
+//
+//Author: Aidan Connaughton
+//Date: 12/06/2022
+//Class: COMSC110 LAB
+//Instructor: Dr. Omar
+//
+//Purpose: Hangman game with GUI
+//**************************
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -278,7 +289,7 @@ public class hangmanATC extends Application {
 
 
                     // check if the game is over by the array having 6 letters
-                    if (game.getWrongLetters()[5] != null) {
+                    if (game.getWrongGuesses() == 6) {
                         // game is over
                         gameOverGUI(game.getGuesses(), game.getWins(), game.getLosses(), false, game.getWord());
 
@@ -340,11 +351,11 @@ public class hangmanATC extends Application {
         gameStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
     }
 
-    private void gameOverGUI(int guesses, int wins, int losses, boolean b, String word) {
+    private void gameOverGUI(int guesses, int wins, int losses, boolean isWin, String word) {
         // This method creates the game over GUI
 
         //Update the wins and losses
-        if (b) {
+        if (isWin) {
             wins++;
         } else {
             losses++;
@@ -381,7 +392,7 @@ public class hangmanATC extends Application {
         overIcon.setFitWidth(100);
 
         // Sets image based on if the game was won or lost
-        if (b) {
+        if (isWin) {
             overIcon.setImage(new Image(currentDir + "\\hangmanElements\\win.png"));
         } else {
             overIcon.setImage(new Image(currentDir + "\\hangmanElements\\lose.png"));
@@ -403,7 +414,7 @@ public class hangmanATC extends Application {
         t4.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
         // create a text
-        Text t5 = new Text("You " + (b ? "Won!" : "Lose!"));
+        Text t5 = new Text("You " + (isWin ? "Won!" : "Lose!"));
         t5.setFill(Color.BLACK);
         t5.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 

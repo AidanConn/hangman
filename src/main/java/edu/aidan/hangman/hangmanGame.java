@@ -1,5 +1,16 @@
 package edu.aidan.hangman;
 
+//**************************
+//hangmanGame.java
+//
+//Author: Aidan Connaughton
+//Date: 12/06/2022
+//Class: COMSC110 LAB
+//Instructor: Dr. Omar
+//
+//Purpose: Class to handle the game functionality
+//**************************
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -26,25 +37,21 @@ class hangmanGame {
         // Load win and loss data from file
 
         try {
-            //get current directory
-            // String currentDir = System.getProperty("user.dir");
-            //create a new file object
-            // File file = new File(currentDir + "\\src\\main\\java\\com\\example\\hangman\\gameData.txt");
 
             //get current directory
             String currentDir = System.getProperty("user.dir");
 
             File file = new File(currentDir + "\\stats.txt");
-            Scanner sc = new Scanner(file);
-            while (sc.hasNextLine()) {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
                 // First int is wins and second is losses
-                String[] data = sc.nextLine().split(" ");
+                String[] data = scanner.nextLine().split(" ");
                 wins = Integer.parseInt(data[0]);
                 losses = Integer.parseInt(data[1]);
 
 
             }
-            sc.close();
+            scanner.close();
         } catch (FileNotFoundException e) {
             // If file doesn't exist, create it
             System.out.println("An error occurred.");
