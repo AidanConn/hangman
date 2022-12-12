@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
@@ -463,13 +464,24 @@ public class hangmanATC extends Application {
             e.printStackTrace();
         }
 
-        // Organize the GUI elements
-        vBox.getChildren().addAll(logo, t1, overIcon, t5, t2, t3, t4, b1);
+        // Organize the GUI elements to make it look nice and clean (t5 is the text that says "You Win!" or "You Lose!")
+        vBox.getChildren().addAll(t5, overIcon, t1, t2, t3, t4, b1);
         vBox.setAlignment(Pos.CENTER);
+
+        // The border pane is used to organize the GUI elements
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(logo);
+        hBox.setAlignment(Pos.CENTER);
+
+        // The border pane is used to organize the GUI elements
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(hBox);
+        borderPane.setCenter(vBox);
+        borderPane.setPadding(new Insets(10, 10, 10, 10));
 
 
         // add the vBox to the stack pane
-        stackPane.getChildren().add(vBox);
+        stackPane.getChildren().add(borderPane);
 
         // create a scene
         Scene scene = new Scene(stackPane, 500, 750);
