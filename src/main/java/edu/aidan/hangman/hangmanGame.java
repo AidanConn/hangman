@@ -54,15 +54,17 @@ class hangmanGame {
             scanner.close();
         } catch (FileNotFoundException e) {
             // If file doesn't exist, create it
-            System.out.println("An error occurred.");
+            System.out.println("File not found, using default values.");
+            wins = 0;
+            losses = 0;
         }
 
     }
 
     // get the word from a list of words
-    public hangmanGame(int wordLength) {
+    public hangmanGame(int wordLength, boolean gameDemo) {
         gameData();
-        newGame(wordLength);
+        newGame(wordLength, gameDemo);
     }
 
     // setters and getters
@@ -84,17 +86,17 @@ class hangmanGame {
 
     // Methods
 
-    public void newGame(int wordLength) {
+    public void newGame(int wordLength, boolean gameDemo) {
         // Start a new game
         // Reset guesses
         guesses = 0;
 
         // Get a new word
-        word = getWord(wordLength);
+        word = getWord(wordLength, gameDemo);
 
     }
 
-    public String getWord(int wordLength) {
+    public String getWord(int wordLength, boolean gameDemo) {
         // 3 different word lists {4, 6, 8} letters long to choose from
         // make the words technology related (computer terms) 4 letters, 6 letters, 8 letters
         // 4 letter words array
@@ -104,36 +106,44 @@ class hangmanGame {
         // 8 letter words
         String[] wordList8 = {"VARIABLE", "FUNCTION", "DATABASE", "SOFTWARE", "HARDWARE", "OPERATOR", "COMPUTER", "LANGUAGE", "COMPILER", "DEBUGGER", "KEYBOARD", "INTERNET", "SOFTWARE", "HARDWARE", "OPERATOR", "COMPUTER", "LANGUAGE", "COMPILER", "DEBUGGER", "INTERNET"};
 
-        switch (wordLength) {
-            case 4 -> {
-                // get wordList4 length
-                int wordList4Length = wordList4.length;
-                // get random number between 1 and wordList4Length
-                int randomNum = (int) (Math.random() * wordList4Length);
-                // return word at randomNum
-                return wordList4[randomNum];
-            }
-            case 6 -> {
-                // get wordList6 length
-                int wordList6Length = wordList6.length;
-                // get random number between 1 and wordList6Length
-                int randomNum = (int) (Math.random() * wordList6Length);
-                // return word at randomNum
-                return wordList6[randomNum];
-            }
-            case 8 -> {
-                // get wordList8 length
-                int wordList8Length = wordList8.length;
-                // get random number between 1 and wordList8Length
-                int randomNum = (int) (Math.random() * wordList8Length);
-                // return word at randomNum
-                return wordList8[randomNum];
-            }
-            default -> {
-                return "error";
+        if (gameDemo) {
+            return switch (wordLength) {
+                case 4 -> "JAVA";
+                case 6 -> "MEMORY";
+                case 8 -> "VARIABLE";
+                default -> "ERROR";
+            };
+        } else {
+            switch (wordLength) {
+                case 4 -> {
+                    // get wordList4 length
+                    int wordList4Length = wordList4.length;
+                    // get random number between 1 and wordList4Length
+                    int randomNum = (int) (Math.random() * wordList4Length);
+                    // return word at randomNum
+                    return wordList4[randomNum];
+                }
+                case 6 -> {
+                    // get wordList6 length
+                    int wordList6Length = wordList6.length;
+                    // get random number between 1 and wordList6Length
+                    int randomNum = (int) (Math.random() * wordList6Length);
+                    // return word at randomNum
+                    return wordList6[randomNum];
+                }
+                case 8 -> {
+                    // get wordList8 length
+                    int wordList8Length = wordList8.length;
+                    // get random number between 1 and wordList8Length
+                    int randomNum = (int) (Math.random() * wordList8Length);
+                    // return word at randomNum
+                    return wordList8[randomNum];
+                }
+                default -> {
+                    return "ERROR";
+                }
             }
         }
-
     }
 
     public boolean guessLetter(String letterGuess) {

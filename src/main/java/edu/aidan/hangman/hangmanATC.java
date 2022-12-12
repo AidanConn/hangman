@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -73,6 +74,10 @@ public class hangmanATC extends Application {
         // Default selection
         comboBox.setValue("Hard (4 letters)");
 
+        // Make a demo game checkbox
+        CheckBox demoGame = new CheckBox("Demo Game");
+        demoGame.setSelected(false);
+
         // Start button
         Button b1 = new Button("Start Game");
         b1.setStyle("-fx-font: 22 arial;");
@@ -84,13 +89,13 @@ public class hangmanATC extends Application {
             switch (comboBox.getValue().toString()) {
                 case "Hard (4 letters)" ->
                     // start the game with 4 letters
-                        gameGUI(4);
+                        gameGUI(4, demoGame.isSelected());
                 case "Medium (6 letters)" ->
                     // start the game with 6 letters
-                        gameGUI(6);
+                        gameGUI(6, demoGame.isSelected());
                 case "Easy (8 letters)" ->
                     // start the game with 8 letters
-                        gameGUI(8);
+                        gameGUI(8, demoGame.isSelected());
             }
 
             // hide the startup GUI
@@ -103,7 +108,11 @@ public class hangmanATC extends Application {
         vBox.getChildren().add(logo);
         vBox.getChildren().add(t1);
         vBox.getChildren().add(comboBox);
+        vBox.getChildren().add(demoGame);
         vBox.getChildren().add(b1);
+
+        // want the gap between the check box and the start button to be 50
+        vBox.setMargin(demoGame, new Insets(0, 0, -40, 0));
 
         // center the VBox
         vBox.setStyle("-fx-alignment: center;");
@@ -121,14 +130,14 @@ public class hangmanATC extends Application {
 
 
     // Game GUI (Pass in the number of letters)
-    public void gameGUI(int numLetters) {
+    public void gameGUI(int numLetters, boolean gameDemo) {
         // This is the game GUI
 
         // New stage
         Stage gameStage = new Stage();
 
         // Creates a new game
-        hangmanGame game = new hangmanGame(numLetters);
+        hangmanGame game = new hangmanGame(numLetters, gameDemo);
 
         // guesses used
         int guesses = game.getGuesses();
