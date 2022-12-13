@@ -38,11 +38,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 
 public class hangmanATC extends Application {
-
+    // This method is the main method for the hangman game. (Start up)
     @Override
     public void start(Stage primaryStage) {
         // This is the main window of the game
-
 
         //get current directory
         String currentDir = System.getProperty("user.dir");
@@ -359,6 +358,7 @@ public class hangmanATC extends Application {
         gameStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
     }
 
+    // This method creates the game over GUI
     private void gameOverGUI(int guesses, int wins, int losses, boolean isWin, String word) {
         // This method creates the game over GUI
 
@@ -490,9 +490,8 @@ public class hangmanATC extends Application {
         gameOverStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
     }
 
-
+    // Launch the application
     public static void main(String[] args) {
-        // launch the application
         launch(args);
     }
 }
