@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-class hangmanGame {
+class hangmanGameATC {
     // This is the main class for the hangman game.
 
     // This keeps track of the number of guesses the user used.
@@ -62,7 +62,7 @@ class hangmanGame {
     }
 
     // get the word from a list of words
-    public hangmanGame(int wordLength, boolean gameDemo) {
+    public hangmanGameATC(int wordLength, boolean gameDemo) {
         gameData();
         newGame(wordLength, gameDemo);
     }
