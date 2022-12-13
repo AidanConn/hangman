@@ -1,7 +1,7 @@
 package edu.aidan.hangman;
 
 //**************************
-//hangmanGame.java
+//hangmanGameATC.java
 //
 //Author: Aidan Connaughton
 //Date: 12/06/2022

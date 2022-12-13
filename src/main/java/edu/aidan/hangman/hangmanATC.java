@@ -347,7 +347,6 @@ public class hangmanATC extends Application {
         // add the border pane to the stack pane
         stackPane.getChildren().add(borderPane);
 
-
         // add the vBox to the stack pane
         stackPane.setStyle("-fx-background-color: #FFFFFF;");
 
