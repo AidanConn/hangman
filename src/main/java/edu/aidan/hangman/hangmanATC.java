@@ -110,11 +110,12 @@ public class hangmanATC extends Application {
         vBox.getChildren().add(demoGame);
         vBox.getChildren().add(b1);
 
-        // want the gap between the check box and the start button to be 50
+        // This makes the checkbox and button closer
         vBox.setMargin(demoGame, new Insets(0, 0, -40, 0));
 
         // center the VBox
         vBox.setStyle("-fx-alignment: center;");
+
 
         // Scene for the startup GUI
         Scene scene = new Scene(vBox, 500, 500);
@@ -234,6 +235,7 @@ public class hangmanATC extends Application {
 
                 // This checks if the letter is in the word by passing the letter to the game class
                 if (game.guessLetter(letter)) {
+                    // ----------- Correct Letter ------------
 
                     // This updates the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
@@ -277,7 +279,7 @@ public class hangmanATC extends Application {
 
 
                 } else {
-                    // Wrong letter
+                    // ----------- Wrong letter guessed ------------
 
                     // Updates the hangman image
                     image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-" + game.getWrongGuesses() + ".png"));
