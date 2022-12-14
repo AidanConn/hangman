@@ -63,7 +63,7 @@ public class hangmanATC extends Application {
         t1.setStyle("-fx-alignment: center;");
 
         // Selection box for the number of letters
-        ComboBox comboBox = new ComboBox();
+        ComboBox<String> comboBox = new ComboBox<>();
         comboBox.getItems().addAll(
                 "Hard (4 letters)",
                 "Medium (6 letters)",
@@ -85,7 +85,7 @@ public class hangmanATC extends Application {
         // Start button action
         b1.setOnAction(e -> {
             // switch statement for the number of letters and pass it to the hangman game
-            switch (comboBox.getValue().toString()) {
+            switch (comboBox.getValue()) {
                 case "Hard (4 letters)" ->
                     // start the game with 4 letters
                         gameGUI(4, demoGame.isSelected());
@@ -111,7 +111,7 @@ public class hangmanATC extends Application {
         vBox.getChildren().add(b1);
 
         // This makes the checkbox and button closer
-        vBox.setMargin(demoGame, new Insets(0, 0, -40, 0));
+        VBox.setMargin(demoGame, new Insets(0, 0, -40, 0));
 
         // center the VBox
         vBox.setStyle("-fx-alignment: center;");
