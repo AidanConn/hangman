@@ -104,9 +104,13 @@ public class hangmanATC extends Application {
 
         });
 
+        // HBox for the logo on top
+        HBox logoBox = new HBox();
+        logoBox.getChildren().add(logo);
+        logoBox.setAlignment(Pos.CENTER);
+
         // VBox to hold the logo, text and selection box
         VBox vBox = new VBox(50);
-        vBox.getChildren().add(logo);
         vBox.getChildren().add(t1);
         vBox.getChildren().add(comboBox);
         vBox.getChildren().add(demoGame);
@@ -118,9 +122,18 @@ public class hangmanATC extends Application {
         // center the VBox
         vBox.setStyle("-fx-alignment: center;");
 
+        // BorderPane to hold the VBox
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(logoBox);
+        borderPane.setCenter(vBox);
+
+        // set the scene color to white
+        borderPane.setStyle("-fx-background-color: white;");
+
+
 
         // Scene for the startup GUI
-        Scene scene = new Scene(vBox, 500, 500);
+        Scene scene = new Scene(borderPane, 400, 400);
         primaryStage.setTitle("Hangman | Start");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -340,27 +353,30 @@ public class hangmanATC extends Application {
 
         // Organize the GUI elements
 
-        VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(hangmanStick, t1, word, t2, t3, t4, t5, textField, b1);
-        vBox.setAlignment(Pos.CENTER);
-
+        // Just the Logo
         HBox hBox = new HBox(10);
         hBox.getChildren().addAll(logo);
         hBox.setAlignment(Pos.CENTER);
 
+        // This has everything except the logo
+        VBox vBox = new VBox(10);
+        vBox.getChildren().addAll(hangmanStick, t1, word, t2, t3, t4, t5, textField, b1);
+        vBox.setAlignment(Pos.CENTER);
+
+
         BorderPane borderPane = new BorderPane();
-        borderPane.setTop(hBox);
-        borderPane.setCenter(vBox);
+        borderPane.setTop(hBox); // Logo
+        borderPane.setCenter(vBox); // Everything else
         borderPane.setPadding(new Insets(10, 10, 10, 10));
 
         // add the border pane to the stack pane
         stackPane.getChildren().add(borderPane);
 
-        // add the vBox to the stack pane
+        // This sets the style of the stack pane to white
         stackPane.setStyle("-fx-background-color: #FFFFFF;");
 
         // create a scene
-        Scene scene = new Scene(stackPane, 650, 700);
+        Scene scene = new Scene(stackPane, 600, 625);
         gameStage.setTitle("Hangman | Game");
         gameStage.setScene(scene);
         gameStage.show();
@@ -371,7 +387,7 @@ public class hangmanATC extends Application {
     //------------------------- Game Over GUI -------------------------
     // This method creates the game over GUI
     private void gameOverGUI(int guesses, int wins, int losses, boolean isWin, String word) {
-        // This method creates the game over GUI
+        // This method creates the game over GUI (Get the number of guesses, wins, losses, if the game was won or lost, and the word)
 
         //Update the wins and losses
         if (isWin) {
@@ -383,13 +399,13 @@ public class hangmanATC extends Application {
         // get current directory
         String currentDir = System.getProperty("user.dir");
 
-        // create a new stage
+        // Game over stage
         Stage gameOverStage = new Stage();
 
-        // create a stack pane
+        // Stack pane
         StackPane stackPane = new StackPane();
 
-        // create a vBox
+        // VBox for the game over GUI
         VBox vBox = new VBox(50);
 
         // logo
@@ -399,7 +415,7 @@ public class hangmanATC extends Application {
         logo.setFitWidth(359);
 
 
-        // create a text
+        // T1 is the word
         Text t1 = new Text("Word: " + word);
         t1.setFill(Color.BLACK);
         t1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
@@ -417,31 +433,31 @@ public class hangmanATC extends Application {
             overIcon.setImage(new Image(currentDir + "\\hangmanElements\\lose.png"));
         }
 
-        // create a text
+        // T2 is the number of guesses
         Text t2 = new Text("Total Guesses: " + guesses);
         t2.setFill(Color.BLACK);
         t2.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        // create a text
+        // T3 is the number of wins
         Text t3 = new Text("Wins: " + wins);
         t3.setFill(Color.BLACK);
         t3.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        // create a text
+        // T4 is the number of losses
         Text t4 = new Text("Losses: " + losses);
         t4.setFill(Color.BLACK);
         t4.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        // create a text
+        // T5 is "You Win" or "You Lose"
         Text t5 = new Text("You " + (isWin ? "Won!" : "Lose!"));
         t5.setFill(Color.BLACK);
         t5.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        // create a button
+        // B1 is the play again button
         Button b1 = new Button("Play Again");
         b1.setStyle("-fx-font: 22 arial;");
 
-        // button action
+        // button action for play again button
         b1.setOnAction(e -> {
             // close the current stage
             gameOverStage.close();
@@ -476,6 +492,8 @@ public class hangmanATC extends Application {
         // Organize the GUI elements to make it look nice and clean (t5 is the text that says "You Win!" or "You Lose!")
         vBox.getChildren().addAll(t5, overIcon, t1, t2, t3, t4, b1);
         vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(10);
+
 
         // The border pane is used to organize the GUI elements
         HBox hBox = new HBox(10);
@@ -486,14 +504,15 @@ public class hangmanATC extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(hBox);
         borderPane.setCenter(vBox);
-        borderPane.setPadding(new Insets(10, 10, 10, 10));
+        borderPane.setPadding(new Insets(0, 0, 0, 10));
+
 
 
         // add the vBox to the stack pane
         stackPane.getChildren().add(borderPane);
 
         // create a scene
-        Scene scene = new Scene(stackPane, 500, 750);
+        Scene scene = new Scene(stackPane, 400, 450);
         gameOverStage.setTitle("Hangman | Game Over");
         gameOverStage.setScene(scene);
         gameOverStage.show();
