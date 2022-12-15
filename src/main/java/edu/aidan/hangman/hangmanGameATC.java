@@ -8,7 +8,7 @@ package edu.aidan.hangman;
 //Class: COMSC110 LAB
 //Instructor: Dr. Omar
 //
-//Purpose: Class to handle the game functionality
+//Purpose: This class stores variables and methods for the hangman game
 //**************************
 
 import java.io.File;

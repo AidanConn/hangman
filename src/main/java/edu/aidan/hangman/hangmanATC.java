@@ -8,7 +8,7 @@ package edu.aidan.hangman;
 //Class: COMSC110 LAB
 //Instructor: Dr. Omar
 //
-//Purpose: Hangman game with GUI
+//Purpose: This program is a hangman game that allows the user to play a game with 3 difficulty levels.
 //**************************
 
 import javafx.application.Application;
@@ -38,6 +38,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 
 public class hangmanATC extends Application {
+
+    //------------------------------------ Game Start ------------------------------------
     // This method is the main method for the hangman game. (Start up)
     @Override
     public void start(Stage primaryStage) {
@@ -87,13 +89,13 @@ public class hangmanATC extends Application {
             // switch statement for the number of letters and pass it to the hangman game
             switch (comboBox.getValue()) {
                 case "Hard (4 letters)" ->
-                    // start the game with 4 letters
+                    // start the game with 4 letters and a boolean for demo game
                         gameGUI(4, demoGame.isSelected());
                 case "Medium (6 letters)" ->
-                    // start the game with 6 letters
+                    // start the game with 6 letters and a boolean for demo game
                         gameGUI(6, demoGame.isSelected());
                 case "Easy (8 letters)" ->
-                    // start the game with 8 letters
+                    // start the game with 8 letters and a boolean for demo game
                         gameGUI(8, demoGame.isSelected());
             }
 
@@ -128,7 +130,7 @@ public class hangmanATC extends Application {
 
     }
 
-
+    // ---------------------------- Game GUI ----------------------------
     // Game GUI (Pass in the number of letters)
     public void gameGUI(int numLetters, boolean gameDemo) {
         // This is the game GUI
@@ -211,7 +213,13 @@ public class hangmanATC extends Application {
             }
             // This checks if the text is a number, special character
             if (!newValue.matches("[a-zA-Z]*")) {
+                // This will only allow letters to be entered by changing the text to nothing
                 textField.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+            // Prevent spaces from being entered
+            if (newValue.matches(" ")) {
+                // This will only allow letters to be entered by changing the text to nothing
+                textField.setText(newValue.replaceAll(" ", ""));
             }
         });
 
@@ -220,7 +228,7 @@ public class hangmanATC extends Application {
         Button b1 = new Button("Guess");
         b1.setStyle("-fx-font: 22 arial;");
 
-        // button action
+        // button action for the guess button
         b1.setOnAction(e -> {
             // get the letter from the text box
             String letter = textField.getText();
@@ -313,7 +321,7 @@ public class hangmanATC extends Application {
 
             }
 
-            // set the focus back to the text box
+            // This sets the focus back to the text box so the user can enter another letter
             textField.requestFocus();
 
         });
@@ -321,7 +329,7 @@ public class hangmanATC extends Application {
         // Listener for the Enter key
         textField.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
-                // This calls the button action
+                // This calls the button action when the enter key is pressed
                 b1.fire();
             }
         });
@@ -360,6 +368,7 @@ public class hangmanATC extends Application {
         gameStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
     }
 
+    //------------------------- Game Over GUI -------------------------
     // This method creates the game over GUI
     private void gameOverGUI(int guesses, int wins, int losses, boolean isWin, String word) {
         // This method creates the game over GUI
