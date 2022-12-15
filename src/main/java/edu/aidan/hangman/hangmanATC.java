@@ -8,7 +8,7 @@ package edu.aidan.hangman;
 //Class: COMSC110 LAB
 //Instructor: Dr. Omar
 //
-//Purpose: This program is a hangman game that allows the user to play a game with 3 difficulty levels.
+//Purpose: This program is a hangman game that allows the user to play a game with 3 difficulty levels and keeps track of wins and losses.
 //**************************
 
 import javafx.application.Application;
@@ -45,7 +45,7 @@ public class hangmanATC extends Application {
     public void start(Stage primaryStage) {
         // This is the main window of the game
 
-        //get current directory
+        //Current directory (Used because of discrepancies between IDEs)
         String currentDir = System.getProperty("user.dir");
 
         // Logo
