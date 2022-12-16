@@ -5,6 +5,7 @@ package edu.aidan.hangman;
 //
 //Author: Aidan Connaughton
 //Date: 12/06/2022
+//Last Edited: 12/16/2022 @ 10:08am
 //Class: COMSC110 LAB
 //Instructor: Dr. Omar
 //
@@ -38,10 +39,7 @@ class hangmanGameATC {
 
         try {
 
-            //get current directory
-            String currentDir = System.getProperty("user.dir");
-
-            File file = new File(currentDir + "\\stats.txt");
+            File file = new File("stats.txt");
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 // First int is wins and second is losses

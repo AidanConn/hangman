@@ -5,6 +5,7 @@ package edu.aidan.hangman;
 //
 //Author: Aidan Connaughton
 //Date: 12/06/2022
+//Last Edited: 12/16/2022 @ 10:08am
 //Class: COMSC110 LAB
 //Instructor: Dr. Omar
 //
@@ -45,11 +46,8 @@ public class hangmanATC extends Application {
     public void start(Stage primaryStage) {
         // This is the main window of the game
 
-        //Current directory (Used because of discrepancies between IDEs)
-        String currentDir = System.getProperty("user.dir");
-
         // Logo
-        Image image = new Image(currentDir + "\\Hangman.png");
+        Image image = new Image("Hangman.png");
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
@@ -147,7 +145,7 @@ public class hangmanATC extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
+        primaryStage.getIcons().add(new Image("gameIcon.png"));
 
 
     }
@@ -175,17 +173,14 @@ public class hangmanATC extends Application {
         }
 
 
-        // get current directory
-        String currentDir = System.getProperty("user.dir");
-
         // Logo
-        Image image = new Image(currentDir + "\\Hangman.png");
+        Image image = new Image("Hangman.png");
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
 
         // Create a new image view | Atomic reference is used to change the image later
-        AtomicReference<Image> image2 = new AtomicReference<>(new Image(currentDir + "\\hangmanStages\\hangmanStick-0.png"));
+        AtomicReference<Image> image2 = new AtomicReference<>(new Image("hangmanStick-0.png"));
         ImageView hangmanStick = new ImageView(image2.get());
         hangmanStick.setFitHeight(200);
         hangmanStick.setFitWidth(200);
@@ -312,7 +307,7 @@ public class hangmanATC extends Application {
                     // ----------- Wrong letter guessed ------------
 
                     // Updates the hangman image
-                    image2.set(new Image(currentDir + "\\hangmanStages\\hangmanStick-" + game.getWrongGuesses() + ".png"));
+                    image2.set(new Image("hangmanStick-" + game.getWrongGuesses() + ".png"));
 
                     // update the number of guesses
                     t2.setText("Total Guesses: " + game.getGuesses());
@@ -390,7 +385,7 @@ public class hangmanATC extends Application {
         gameStage.setScene(scene);
         gameStage.show();
         gameStage.setResizable(false);
-        gameStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
+        gameStage.getIcons().add(new Image("gameIcon.png"));
     }
 
     //------------------------- Game Over GUI -------------------------
@@ -405,9 +400,6 @@ public class hangmanATC extends Application {
             losses++;
         }
 
-        // get current directory
-        String currentDir = System.getProperty("user.dir");
-
         // Game over stage
         Stage gameOverStage = new Stage();
 
@@ -418,7 +410,7 @@ public class hangmanATC extends Application {
         VBox vBox = new VBox(50);
 
         // logo
-        Image image = new Image(currentDir + "\\Hangman.png");
+        Image image = new Image("Hangman.png");
         ImageView logo = new ImageView(image);
         logo.setFitHeight(100);
         logo.setFitWidth(359);
@@ -430,16 +422,16 @@ public class hangmanATC extends Application {
         t1.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
 
-        Image image2 = new Image(currentDir + "\\gameIcon.png");
+        Image image2 = new Image("gameIcon.png");
         ImageView overIcon = new ImageView(image2);
         overIcon.setFitHeight(100);
         overIcon.setFitWidth(100);
 
         // Sets image based on if the game was won or lost
         if (isWin) {
-            overIcon.setImage(new Image(currentDir + "\\hangmanElements\\win.png"));
+            overIcon.setImage(new Image("win.png"));
         } else {
-            overIcon.setImage(new Image(currentDir + "\\hangmanElements\\lose.png"));
+            overIcon.setImage(new Image("lose.png"));
         }
 
         // T2 is the number of guesses
@@ -477,8 +469,8 @@ public class hangmanATC extends Application {
 
         // Save the wins and losses to a file
         try {
-            // create a file
-            File file = new File(currentDir + "\\stats.txt");
+            // create a file from the resoues folder
+            File file = new File("stats.txt");
 
             // create a file writer
             FileWriter fileWriter = new FileWriter(file);
@@ -526,11 +518,12 @@ public class hangmanATC extends Application {
         gameOverStage.setScene(scene);
         gameOverStage.show();
         gameOverStage.setResizable(false);
-        gameOverStage.getIcons().add(new Image(currentDir + "\\gameIcon.png"));
+        gameOverStage.getIcons().add(new Image("gameIcon.png"));
     }
 
     // Launch the application
     public static void main(String[] args) {
         launch(args);
+
     }
 }
