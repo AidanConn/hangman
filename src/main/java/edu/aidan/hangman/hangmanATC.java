@@ -373,7 +373,7 @@ public class hangmanATC extends Application {
         stackPane.getChildren().add(borderPane);
 
         // This sets the style of the stack pane to white
-        stackPane.setStyle("-fx-background-color: #FFFFFF;");
+        stackPane.setStyle("-fx-background-color: white;");
 
         // create a scene
         Scene scene = new Scene(stackPane, 600, 625);
@@ -510,6 +510,7 @@ public class hangmanATC extends Application {
 
         // add the vBox to the stack pane
         stackPane.getChildren().add(borderPane);
+        stackPane.setStyle("-fx-background-color: white;");
 
         // create a scene
         Scene scene = new Scene(stackPane, 400, 450);
