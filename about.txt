@@ -1,0 +1,19 @@
+To run this program, run the hangmanATC.java file.
+
+Files Included:
+hangmanATC.java [Main Program]
+hangmanGameATC.java [Game Class]
+
+hangmanElements
+    lose.png
+    win.png
+
+hangmanStages
+    hangmanStick-0.png
+    hangmanStick-1.png
+    hangmanStick-2.png
+    hangmanStick-3.png
+    hangmanStick-4.png
+    hangmanStick-5.png
+    hangmanStick-6.png
+
