@@ -1,3 +1,5 @@
+Made by: Aidan Connaughton
+
 To run this program, run the hangmanATC.java file.
 
 Files Included:
@@ -17,3 +19,5 @@ hangmanStages
     hangmanStick-5.png
     hangmanStick-6.png
 
+
+Make sure to keep the file structure the same as above.
