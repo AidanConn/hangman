@@ -46,9 +46,16 @@ class hangmanGameATC {
             while (scanner.hasNextLine()) {
                 // First int is wins and second is losses
                 String[] data = scanner.nextLine().split(" ");
-                wins = Integer.parseInt(data[0]);
-                losses = Integer.parseInt(data[1]);
 
+                // Try to read the data
+                try {
+                    wins = Integer.parseInt(data[0]);
+                    losses = Integer.parseInt(data[1]);
+                } catch (NumberFormatException e) {
+                    // Data is not valid so set to 0
+                    wins = 0;
+                    losses = 0;
+                 }
 
             }
             scanner.close();
