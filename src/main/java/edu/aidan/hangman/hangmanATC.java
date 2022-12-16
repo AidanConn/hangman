@@ -67,13 +67,23 @@ public class hangmanATC extends Application {
         // Selection box for the number of letters
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.getItems().addAll(
-                "Hard (4 letters)",
+                "Easy (8 letters)",
                 "Medium (6 letters)",
-                "Easy (8 letters)"
+                "Hard (4 letters)"
         );
 
+        // This changes the combo box color outline to represent the difficulty
+        comboBox.setOnAction(e -> {
+            switch (comboBox.getValue()) {
+                case "Easy (8 letters)" -> comboBox.setStyle("-fx-border-color: #15a900; -fx-border-width: 2px;"); // Green
+                case "Medium (6 letters)" -> comboBox.setStyle("-fx-border-color: #ff6a00; -fx-border-width: 2px;"); // Orange
+                case "Hard (4 letters)" -> comboBox.setStyle("-fx-border-color: #FF0000; -fx-border-width: 2px;"); // Red
+            }
+        });
+
         // Default selection
-        comboBox.setValue("Hard (4 letters)");
+        comboBox.setValue("Easy (8 letters)");
+        comboBox.setStyle("-fx-border-color: #15a900; -fx-border-width: 2px;"); // Green
 
         // Make a demo game checkbox
         CheckBox demoGame = new CheckBox("Demo Game");
@@ -129,7 +139,6 @@ public class hangmanATC extends Application {
 
         // set the scene color to white
         borderPane.setStyle("-fx-background-color: white;");
-
 
 
         // Scene for the startup GUI
@@ -505,7 +514,6 @@ public class hangmanATC extends Application {
         borderPane.setTop(hBox);
         borderPane.setCenter(vBox);
         borderPane.setPadding(new Insets(0, 0, 0, 10));
-
 
 
         // add the vBox to the stack pane
